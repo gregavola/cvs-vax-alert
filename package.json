@@ -1,5 +1,5 @@
 {
-  "name": "facebook-scraper-fundrasier",
+  "name": "cvs-ct-vax-alert",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,12 +9,11 @@
   "author": "Greg Avola <gregory.avola@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.21.1",
+    "chrome-aws-lambda": "^8.0.2",
     "dotenv": "^8.2.0",
     "html-table-to-json": "^1.0.0",
     "mongodb": "^3.6.5",
-    "twilio": "^3.59.0"
-  },
-  "devDependencies": {
-    "chrome-aws-lambda": "^8.0.2"
+    "querystring": "^0.2.1"
   }
 }

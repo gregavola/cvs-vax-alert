@@ -1,19 +1,23 @@
 require("dotenv").config();
 const sendSMS = require("./libs/sms");
 const logRequest = require("./libs/logRequest");
-const chromeLambda = require("chrome-aws-lambda");
+const chromium = require("chrome-aws-lambda");
 const HtmlTableToJson = require("html-table-to-json");
 
 exports.handler = async (event) => {
-  const browser = await chromeLambda.puppeteer.launch({
-    args: chromeLambda.args,
+  const browser = await chromium.puppeteer.launch({
+    args: chromium.args,
     defaultViewport: chromium.defaultViewport,
-    executablePath: await chromeLambda.executablePath,
+    executablePath: await chromium.executablePath,
+    headless: chromium.headless,
+    ignoreHTTPSErrors: true,
   });
-
+  const page = await browser.newPage();
   await page.goto(
     "https://www.cvs.com/immunizations/covid-19-vaccine?icid=cvs-home-hero1-link2-coronavirus-vaccine"
   );
+
+  console.log(page.url());
 
   const elementHandle = await page.$('[data-modal="vaccineinfo-CT"]');
 
@@ -56,7 +60,7 @@ exports.handler = async (event) => {
         const locationsText =
           availableSites.length > 1 ? "locations" : "location";
         await sendSMS({
-          message: `CVS COVID VAX ALERT: There are ${availableSites.length} CVS ${locationsText} with available vaccine appointment. ${timeStampText}. First result is ${firstAvailable["City/Town"]} \n LINK: https://www.cvs.com/immunizations/covid-19-vaccine?icid=cvs-home-hero1-link2-coronavirus-vaccine`,
+          message: `CVS COVID VAX ALERT: There are ${availableSites.length} CVS ${locationsText} with available vaccine appointment. ${timeStampText}. First result is ${firstAvailable["City/Town"]} LINK: https://www.cvs.com/immunizations/covid-19-vaccine?icid=cvs-home-hero1-link2-coronavirus-vaccine`,
         });
       }
     }
