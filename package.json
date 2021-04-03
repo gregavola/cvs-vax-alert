@@ -1,0 +1,20 @@
+{
+  "name": "facebook-scraper-fundrasier",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Greg Avola <gregory.avola@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "html-table-to-json": "^1.0.0",
+    "mongodb": "^3.6.5",
+    "twilio": "^3.59.0"
+  },
+  "devDependencies": {
+    "chrome-aws-lambda": "^8.0.2"
+  }
+}
