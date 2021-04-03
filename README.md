@@ -33,3 +33,4 @@ You can remove the MongoDB dependency in the code by removing the `logRequest` f
 1. You zip eveythign and deploy (it should be below 50MB)
 2. Add a layer to your Lambda function (https://github.com/shelfio/chrome-aws-lambda-layer)
 3. Invoke and it should work! Make sure to add your enviromental variables to your Lambda configuration.
+4. You can even add CloudWatch Event Schedule to have the Lambda run on a schedule (https://docs.aws.amazon.com/lambda/latest/dg/services-cloudwatchevents.html)
