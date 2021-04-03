@@ -1,0 +1,27 @@
+name: lambda-depl-prod
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy_source:
+    name: build and deploy lambda
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1.4.4
+        with:
+          node-version: '12'
+      - name: Install dependencies, Build application and Zip dist folder contents
+        run: yarn install && zip -r ./bundle.zip ./ -x "*.env*"
+      - name: deploy zip to aws lambda
+        uses: appleboy/lambda-action@master
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_region: ${{ secrets.AWS_REGION }}
+          function_name: cvsVaxLambda
+          zip_file: bundle.zip
